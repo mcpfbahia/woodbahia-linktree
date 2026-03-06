@@ -94,24 +94,26 @@ export default function LinkButton({
 
                     {/* Text */}
                     <div className="flex-1 min-w-0 text-left">
-                        <div className="flex items-center gap-2">
-                            <span
-                                className="font-semibold text-sm md:text-base leading-tight"
-                                style={{ color: style.labelColor }}
-                            >
-                                {label}
-                            </span>
+                        {/* Label — linha própria, sem competição com badge */}
+                        <span
+                            className="block font-semibold text-sm md:text-base leading-tight"
+                            style={{ color: style.labelColor }}
+                        >
+                            {label}
+                        </span>
+                        {/* Badge + description na 2ª linha */}
+                        <div className="flex items-center gap-1.5 mt-0.5">
                             {badge && (
                                 <span className={`${style.badgeBg} text-white text-xs px-1.5 py-0.5 rounded-md font-bold badge-shine flex-shrink-0`}>
                                     {badge}
                                 </span>
                             )}
+                            {description && (
+                                <p className="text-xs font-light truncate" style={{ color: 'rgba(220,197,168,0.7)' }}>
+                                    {description}
+                                </p>
+                            )}
                         </div>
-                        {description && (
-                            <p className="text-xs mt-0.5 font-light truncate" style={{ color: 'rgba(220,197,168,0.7)' }}>
-                                {description}
-                            </p>
-                        )}
                     </div>
 
                     {/* Arrow */}
