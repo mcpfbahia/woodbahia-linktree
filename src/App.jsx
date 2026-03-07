@@ -100,7 +100,7 @@ export default function App() {
     return (
         <div
             className="min-h-screen relative"
-            style={{ minHeight: '100dvh', backgroundColor: '#0c0a09' }}
+            style={{ minHeight: '100dvh' }}
         >
             {/* Gradient background */}
             <BackgroundGradient />

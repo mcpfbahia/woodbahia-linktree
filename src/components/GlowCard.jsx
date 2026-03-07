@@ -1,11 +1,49 @@
 import { useEffect, useRef } from 'react'
 
-const glowColorMap = {
-  blue: { base: 210, spread: 50 }, // ciano → azul (190–260°), nunca lilás
-  green: { base: 130, spread: 40 }, // verde-limão → verde (130–170°)
-  orange: { base: 25, spread: 40 }, // laranja → âmbar (25–65°)
-  red: { base: 0, spread: 30 }, // vermelho (345–30°)
+// ─── Correção de Performance ────────────────────────────────────────────────
+// PROBLEMA 1: background-attachment:fixed desativa GPU compositing no mobile
+//             → removido do CSS e do inline style
+// PROBLEMA 2: 7 listeners pointermove separados no document
+//             → substituídos por UM ÚNICO listener singleton compartilhado
+// ────────────────────────────────────────────────────────────────────────────
+
+// Singleton: conjunto de refs de todos os GlowCards montados
+const registeredCards = new Set()
+
+function onPointerMove(e) {
+  const x = e.clientX
+  const y = e.clientY
+  const xp = (x / window.innerWidth).toFixed(2)
+  const xs = x.toFixed(2)
+  const yp = (y / window.innerHeight).toFixed(2)
+  const ys = y.toFixed(2)
+  // Atualiza TODOS os cards de uma só vez com UM evento
+  for (const el of registeredCards) {
+    el.style.setProperty('--x', xs)
+    el.style.setProperty('--xp', xp)
+    el.style.setProperty('--y', ys)
+    el.style.setProperty('--yp', yp)
+  }
 }
+
+function registerCard(el) {
+  if (registeredCards.size === 0) {
+    // Adiciona o listener apenas quando o PRIMEIRO card é montado
+    document.addEventListener('pointermove', onPointerMove, { passive: true })
+  }
+  registeredCards.add(el)
+}
+
+function unregisterCard(el) {
+  registeredCards.delete(el)
+  if (registeredCards.size === 0) {
+    // Remove o listener quando o ÚLTIMO card é desmontado
+    document.removeEventListener('pointermove', onPointerMove)
+  }
+}
+
+// ─── CSS injetado uma única vez ─────────────────────────────────────────────
+let stylesInjected = false
 
 const beforeAfterStyles = `
   [data-glow]::before,
@@ -16,7 +54,6 @@ const beforeAfterStyles = `
     inset: calc(var(--border-size) * -1);
     border: var(--border-size) solid transparent;
     border-radius: calc(var(--radius) * 1px);
-    background-attachment: fixed;
     background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -47,7 +84,6 @@ const beforeAfterStyles = `
   [data-glow] [data-glow] {
     position: absolute;
     inset: 0;
-    will-change: filter;
     opacity: var(--outer, 1);
     border-radius: calc(var(--radius) * 1px);
     border-width: calc(var(--border-size) * 20);
@@ -63,30 +99,29 @@ const beforeAfterStyles = `
   }
 `
 
-/**
- * GlowCard — wrapper com efeito neon spotlight que segue o cursor.
- *
- * @param {object}  props
- * @param {React.ReactNode} props.children
- * @param {string}  [props.className]
- * @param {'blue'|'purple'|'green'|'red'|'orange'} [props.glowColor='blue']
- */
+const glowColorMap = {
+  blue: { base: 210, spread: 50 },
+  green: { base: 130, spread: 40 },
+  orange: { base: 25, spread: 40 },
+  red: { base: 0, spread: 30 },
+}
+
 export default function GlowCard({ children, className = '', glowColor = 'blue' }) {
   const cardRef = useRef(null)
-  const innerRef = useRef(null)
 
   useEffect(() => {
-    const syncPointer = (e) => {
-      const { clientX: x, clientY: y } = e
-      if (cardRef.current) {
-        cardRef.current.style.setProperty('--x', x.toFixed(2))
-        cardRef.current.style.setProperty('--xp', (x / window.innerWidth).toFixed(2))
-        cardRef.current.style.setProperty('--y', y.toFixed(2))
-        cardRef.current.style.setProperty('--yp', (y / window.innerHeight).toFixed(2))
-      }
+    // Injeta o CSS apenas uma vez em toda a página
+    if (!stylesInjected) {
+      const tag = document.createElement('style')
+      tag.id = 'glow-card-styles'
+      tag.textContent = beforeAfterStyles
+      document.head.appendChild(tag)
+      stylesInjected = true
     }
-    document.addEventListener('pointermove', syncPointer)
-    return () => document.removeEventListener('pointermove', syncPointer)
+
+    const el = cardRef.current
+    if (el) registerCard(el)
+    return () => { if (el) unregisterCard(el) }
   }, [])
 
   const { base, spread } = glowColorMap[glowColor] ?? glowColorMap.blue
@@ -103,6 +138,7 @@ export default function GlowCard({ children, className = '', glowColor = 'blue' 
     '--border-size': 'calc(var(--border, 2) * 1px)',
     '--spotlight-size': 'calc(var(--size, 150) * 1px)',
     '--hue': 'calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))',
+    // ✅ background-attachment: fixed REMOVIDO — causava repaints completos no mobile
     backgroundImage: `radial-gradient(
       var(--spotlight-size) var(--spotlight-size) at
       calc(var(--x, 0) * 1px)
@@ -112,24 +148,19 @@ export default function GlowCard({ children, className = '', glowColor = 'blue' 
     backgroundColor: 'var(--backdrop, transparent)',
     backgroundSize: 'calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))',
     backgroundPosition: '50% 50%',
-    backgroundAttachment: 'fixed',
     border: 'var(--border-size) solid var(--backup-border)',
     position: 'relative',
-    touchAction: 'none',
   }
 
   return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: beforeAfterStyles }} />
-      <div
-        ref={cardRef}
-        data-glow
-        style={inlineStyles}
-        className={`relative w-full rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)] ${className}`}
-      >
-        <div ref={innerRef} data-glow />
-        {children}
-      </div>
-    </>
+    <div
+      ref={cardRef}
+      data-glow
+      style={inlineStyles}
+      className={`relative w-full rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)] ${className}`}
+    >
+      <div data-glow />
+      {children}
+    </div>
   )
 }
