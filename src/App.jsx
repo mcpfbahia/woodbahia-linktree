@@ -9,7 +9,7 @@ import {
     Phone,
 } from 'lucide-react'
 
-import AnimatedBackground from './components/AnimatedBackground'
+import BackgroundGradient from './components/BackgroundGradient'
 import Header from './components/Header'
 import LinkButton from './components/LinkButton'
 import SocialProof from './components/SocialProof'
@@ -99,20 +99,13 @@ const EXTRA_LINKS = [
 export default function App() {
     return (
         <div
-            className="animated-bg wood-texture min-h-screen relative"
-            style={{ minHeight: '100dvh' }}
+            className="min-h-screen relative"
+            style={{ minHeight: '100dvh', backgroundColor: '#0c0a09' }}
         >
-            {/* Animated canvas background */}
-            <AnimatedBackground />
+            {/* Gradient background */}
+            <BackgroundGradient />
 
-            {/* Radial glow center */}
-            <div
-                className="fixed inset-0 pointer-events-none"
-                style={{
-                    background: 'radial-gradient(ellipse 70% 60% at 50% 30%, rgba(107,76,59,0.18) 0%, transparent 70%)',
-                    zIndex: 1,
-                }}
-            />
+
 
             {/* Main scrollable content */}
             <div className="relative z-10 min-h-screen flex flex-col items-center justify-start py-10 px-4">
