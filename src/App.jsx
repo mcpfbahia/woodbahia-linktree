@@ -57,42 +57,21 @@ const MAIN_LINKS = [
     },
     {
         id: 'portfolio',
-        href: 'https://www.woodbahia.site/#portfolio',
+        href: 'https://www.woodbahia.site/portfolio',
         icon: ImageIcon,
         label: 'Ver portfólio de projetos',
         description: 'Galeria com todas as nossas obras',
         variant: 'default',
         delay: 1.25,
     },
-]
-
-const EXTRA_LINKS = [
-    {
-        id: 'orcamento',
-        href: 'https://wa.me/5571992936290?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento.',
-        icon: DollarSign,
-        label: 'Solicitar orçamento',
-        description: 'Sem compromisso',
-        variant: 'whatsapp',
-        delay: 1.6,
-    },
     {
         id: 'modelos',
-        href: 'https://www.woodbahia.site/#modelos',
+        href: 'https://www.woodbahia.site/modelos',
         icon: Grid,
         label: 'Ver modelos de chalés',
         description: 'Linha completa de projetos',
         variant: 'default',
-        delay: 1.75,
-    },
-    {
-        id: 'comercial',
-        href: 'https://wa.me/5571992936290?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20o%20atendimento%20comercial.',
-        icon: Phone,
-        label: 'Falar com atendimento comercial',
-        description: 'Equipe de vendas disponível',
-        variant: 'default',
-        delay: 1.9,
+        delay: 1.4,
     },
 ]
 
@@ -105,10 +84,8 @@ export default function App() {
             {/* Gradient background */}
             <BackgroundGradient />
 
-
-
             {/* Main scrollable content */}
-            <div className="relative z-10 min-h-screen flex flex-col items-center justify-start py-10 px-4">
+            <div className="relative z-10 min-h-screen flex flex-col items-center justify-start py-8 px-4">
                 <div className="w-full max-w-sm mx-auto">
 
                     {/* Header */}
@@ -123,13 +100,13 @@ export default function App() {
                     >
                         <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-800/30" />
                         <span className="text-xs tracking-widest uppercase font-medium" style={{ color: 'rgba(185,155,122,0.7)' }}>
-                            Links principais
+                            Links em destaque
                         </span>
                         <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-800/30" />
                     </motion.div>
 
                     {/* Main buttons */}
-                    <div className="flex flex-col gap-3 mb-6">
+                    <div className="flex flex-col gap-3 mb-8">
                         {MAIN_LINKS.map((link, i) => (
                             <RevealOnScroll key={link.id} direction="left" delay={i * 0.08} duration={0.5}>
                                 <LinkButton {...link} />
@@ -138,32 +115,9 @@ export default function App() {
                     </div>
 
                     {/* Social Proof */}
-                    <RevealOnScroll direction="up" delay={0} duration={0.7}>
+                    <RevealOnScroll direction="up" delay={0.4} duration={0.8}>
                         <SocialProof />
                     </RevealOnScroll>
-
-                    {/* Extra links label */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 1.5 }}
-                        className="mt-6 mb-3 flex items-center gap-2"
-                    >
-                        <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-800/30" />
-                        <span className="text-xs tracking-widest uppercase font-medium" style={{ color: 'rgba(185,155,122,0.7)' }}>
-                            Mais opções
-                        </span>
-                        <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-800/30" />
-                    </motion.div>
-
-                    {/* Extra buttons */}
-                    <div className="flex flex-col gap-3">
-                        {EXTRA_LINKS.map((link, i) => (
-                            <RevealOnScroll key={link.id} direction="right" delay={i * 0.1} duration={0.5}>
-                                <LinkButton {...link} />
-                            </RevealOnScroll>
-                        ))}
-                    </div>
 
                     {/* Footer */}
                     <RevealOnScroll direction="fade" delay={0.1} duration={0.8}>

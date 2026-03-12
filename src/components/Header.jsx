@@ -58,25 +58,17 @@ export default function Header() {
                 Wood Bahia
             </motion.h1>
 
-            <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="text-bark-medium font-medium text-sm md:text-base tracking-widest uppercase"
-                style={{ color: '#dcc5a8', letterSpacing: '0.12em' }}
-            >
-                Casas Pré Fabricadas
-            </motion.p>
 
-            {/* Subtitle */}
+
             <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
-                className="mt-3 text-sm md:text-base font-light italic"
+                className="mt-3 text-sm md:text-base font-light italic leading-relaxed"
                 style={{ color: '#b89b7a' }}
             >
-                Chalés e Casas Pré-Fabricadas em Madeira Tratada
+                Chalés e Casas Pré-Fabricadas <br /> 
+                em Madeira Tratada
             </motion.p>
 
             {/* Decorative divider */}

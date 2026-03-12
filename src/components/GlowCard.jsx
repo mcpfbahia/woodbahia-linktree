@@ -103,6 +103,7 @@ const glowColorMap = {
   blue: { base: 210, spread: 50 },
   green: { base: 130, spread: 40 },
   orange: { base: 25, spread: 40 },
+  amber: { base: 35, spread: 35 },
   red: { base: 0, spread: 30 },
 }
 
