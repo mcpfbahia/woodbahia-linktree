@@ -28,7 +28,7 @@ function WhatsAppIcon({ size = 22 }) {
 const MAIN_LINKS = [
     {
         id: 'whatsapp',
-        href: 'https://wa.me/5571992936290?text=Ol%C3%A1!%20Vi%20o%20seu%20Instagram%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20ch%C3%A1l%C3%A9s%20e%20casas%20pr%C3%A9-fabricadas.',
+        href: 'https://wa.me/5571992936290?text=Ol%C3%A1!%20%F0%9F%91%8B%20Seja%20bem-vindo%20%C3%A0%20*Wood%20Bahia%20Casas%20Pr%C3%A9-Fabricadas*.%0A%0APra%20te%20ajudar%20de%20forma%20r%C3%A1pida%20e%20j%C3%A1%20te%20passar%20*valores%20reais*%2C%20me%20conta%20s%C3%B3%203%20coisas%3A%0A%0A%F0%9F%91%89%20*Voc%C3%AA%20busca%3A*%0A1)%20Morar%0A2)%20Investir%20(Airbnb%20%2F%20aluguel)%0A3)%20Lazer%0A%0A%F0%9F%91%89%20*J%C3%A1%20tem%20terreno%3F*%0A(Sim%20%2F%20N%C3%A3o%20%2F%20Em%20an%C3%A1lise)%0A%0A%F0%9F%91%89%20*Em%20qual%20cidade%20ou%20regi%C3%A3o%20pretende%20construir%3F*%0A%0ACom%20isso%20j%C3%A1%20consigo%20te%20mostrar%20*modelos%20e%20valores%20exatos*%20pro%20seu%20caso%20%F0%9F%91%8D',
         icon: WhatsAppIcon,
         label: 'Falar com um especialista',
         description: 'Atendimento rápido pelo WhatsApp',
