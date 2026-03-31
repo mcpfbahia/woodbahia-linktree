@@ -38,7 +38,7 @@ const MAIN_LINKS = [
     },
     {
         id: 'site',
-        href: 'https://www.woodbahia.site',
+        href: 'https://www.woodbahia.com',
         icon: Globe,
         label: 'Conheça nosso site',
         description: 'Veja todos os nossos projetos e serviços',
@@ -47,7 +47,7 @@ const MAIN_LINKS = [
     },
     {
         id: 'simulador',
-        href: 'https://www.woodbahia.site/simulador',
+        href: 'https://www.woodbahia.com/simulador',
         icon: Calculator,
         label: 'Simulador de investimento',
         description: 'Descubra o valor do seu chalé ideal',
@@ -57,7 +57,7 @@ const MAIN_LINKS = [
     },
     {
         id: 'portfolio',
-        href: 'https://www.woodbahia.site/portfolio',
+        href: 'https://www.woodbahia.com/portfolio',
         icon: ImageIcon,
         label: 'Ver portfólio de projetos',
         description: 'Galeria com todas as nossas obras',
@@ -66,7 +66,7 @@ const MAIN_LINKS = [
     },
     {
         id: 'modelos',
-        href: 'https://www.woodbahia.site/modelos',
+        href: 'https://www.woodbahia.com/modelos',
         icon: Grid,
         label: 'Ver modelos de chalés',
         description: 'Linha completa de projetos',

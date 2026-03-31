@@ -15,7 +15,7 @@ const SOCIAL_LINKS = [
         iconColor: '#f472b6',
     },
     {
-        href: 'https://www.woodbahia.site',
+        href: 'https://www.woodbahia.com',
         target: '_blank',
         rel: 'noopener noreferrer',
         Icon: Globe,
